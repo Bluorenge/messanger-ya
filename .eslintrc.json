@@ -1,0 +1,65 @@
+{
+    "extends": [
+        "next/core-web-vitals",
+        "next/typescript",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": { "ecmaVersion": 11 },
+    "plugins": ["react", "@typescript-eslint"],
+    "rules": {
+        "react-hooks/exhaustive-deps": 0,
+        "@typescript-eslint/no-unused-vars": 0,
+        "@typescript-eslint/no-explicit-any": 0,
+        "arrow-body-style": "off",
+        "prefer-arrow-callback": "off",
+        "react/jsx-max-props-per-line": [1],
+        "react/jsx-first-prop-new-line": [1, "multiline"],
+        "react/jsx-closing-bracket-location": [1],
+        "jsx-quotes": ["warn", "prefer-double"],
+        "comma-dangle": ["error", "always-multiline"],
+        "semi": "warn", // обязательно ;
+        "quotes": [
+            "error",
+            "single",
+            {
+                "avoidEscape": true,
+                "allowTemplateLiterals": true
+            }
+        ],
+        "semi-spacing": [
+            "error",
+            {
+                "before": false,
+                "after": true
+            }
+        ],
+        "indent": ["error", 4, { "SwitchCase": 1 }],
+        "space-infix-ops": "error", // отступы вокруг + - * / = и тд
+        "eqeqeq": "error", // обязательно === и !== (нельзя == и !=)
+        // "no-eq-null": "error", // обязательно === и !== (нельзя == и !=) но тоько в отношении null
+        "curly": "error", // проверка шаблонов `${name}`
+        "key-spacing": ["error", { "mode": "strict" }], // оформлеgtние обЪекта
+        "space-in-parens": ["error", "never"], // запрет отступов ( a,b)
+        "no-trailing-spaces": "error",
+        "computed-property-spacing": ["error", "never"], // запрет лишних отступов в выражениях a[ i]
+        "array-bracket-spacing": ["error", "never"],
+        "no-multi-spaces": "error", // запрет лишних пробелов var a   = 2
+        "no-sparse-arrays": "warn", // предупреждение при дырке в массиве
+        "no-mixed-spaces-and-tabs": "error", // нельзя миксовать табы и пробелы
+        "no-undef": "warn",
+        "keyword-spacing": ["error", { "after": true }],
+        "comma-spacing": [
+            "error",
+            {
+                "before": false,
+                "after": true
+            }
+        ], // отступ после запятой, а перед нельзя
+        "array-callback-return": "error", // коллбек методов массива типа arr.map arr.filter должны иметь return в коллбеке
+        "no-const-assign": "error",
+        "object-curly-spacing": ["error", "always"]
+    }
+}
