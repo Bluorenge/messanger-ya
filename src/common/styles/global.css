@@ -8,3 +8,7 @@
     --background: black;
     --foreground: white;
 }
+
+body {
+    min-height: 100vh;
+}

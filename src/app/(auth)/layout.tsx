@@ -4,8 +4,8 @@ import { Center, Container, Flex, Heading } from '@chakra-ui/react';
 export default function AuthLayout({ children }: { children: ReactNode }) {
     return (
         <Container
-            height="100vh"
             pt={5}
+            h="100vh"
         >
             <Heading textAlign="center">Messenger</Heading>
 
