@@ -1,13 +1,14 @@
 'use client';
 
-import { Box, Input, Text, VStack } from '@chakra-ui/react';
+import { useState } from 'react';
+import { Box, Input, Link, Text, VStack } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import { Field } from '@/components/ui/field';
-import { fetchData, METHODS, validation } from '@/shared/lib';
+import { fetchData, FETCH_METHODS, validation } from '@/shared/lib';
 import { URLS } from '@/common/constants/global';
-import { useState } from 'react';
 
 enum InputNames {
     first_name = 'first_name',
@@ -29,6 +30,7 @@ interface Inputs {
 
 export default function RegisterPage() {
     const [registerError, setRegisterError] = useState<string>('');
+    const router = useRouter();
 
     const {
         register,
@@ -39,17 +41,21 @@ export default function RegisterPage() {
     const onSubmit = async (data: Inputs) => {
         console.log(data);
         const response = await fetchData(URLS.REGISTER, {
-            method: METHODS.POST,
+            method: FETCH_METHODS.POST,
             body: JSON.stringify(data),
         });
 
         if (response.reason) {
             setRegisterError(response.reason);
         }
+
+        if (response.id) {
+            router.push('/chats');
+        }
     };
 
     return (
-        <Box
+        <VStack
             as="form"
             onSubmit={handleSubmit(onSubmit)}
         >
@@ -104,8 +110,8 @@ export default function RegisterPage() {
             <VStack>
                 <Button type="submit">Register</Button>
                 {registerError && <Text>{registerError}</Text>}
-                <Text>Login</Text>
+                <Link href="/login">Login</Link>
             </VStack>
-        </Box>
+        </VStack>
     );
 }

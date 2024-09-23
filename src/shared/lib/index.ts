@@ -19,7 +19,7 @@ export { capitalizeFirstLetter } from './format/string/capitalize-first-letter';
 
 export { fetchDataCb } from './api/fetch-data-cb';
 export { default as fetchData } from './api/fetch-data';
-export { METHODS } from './api/types';
+export { FETCH_FETCH_METHODS as FETCH_METHODS } from './api/types';
 
 export { isElementPartiallyVisible } from './el-visible/is-el-part-visible';
 

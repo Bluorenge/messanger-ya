@@ -1,10 +1,10 @@
 import { useBoolean } from '@chakra-ui/react';
 
-import { METHODS } from './types';
+import { FETCH_METHODS } from './types';
 import fetchData from './fetch-data';
 
 export async function fetchDataCb<T = any>(
-    method: METHODS,
+    method: FETCH_METHODS,
     path: string,
     setCb: (data: T) => void,
     loadingCb?: ReturnType<typeof useBoolean>[1],

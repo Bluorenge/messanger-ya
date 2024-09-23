@@ -5,4 +5,9 @@ export const URLS = {
     LOGIN: '/auth/signin',
     USER: '/auth/user',
     LOGOUT: '/auth/logout',
+
+    CHATS: '/chats',
+    ADD_CHATS_USERS: '/chats/users',
+
+    USER_SEARCH: '/user/search',
 };
