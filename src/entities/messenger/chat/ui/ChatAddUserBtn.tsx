@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { RiMore2Fill } from 'react-icons/ri';
 import { Box, Center, For, Input } from '@chakra-ui/react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
+import { useAtomValue } from 'jotai';
 
 import { URLS } from '@/common/constants/global';
 import { Button } from '@/components/ui/button';
@@ -19,22 +20,29 @@ import {
 import { useChats } from '@/features/messenger/chats';
 import { FETCH_METHODS, fetchData } from '@/shared/lib';
 import ChatAddedUserItem from './ChatAddedUserItem';
+import { chatAtom } from '@/features/messenger/chat/model/chat-store';
 
 interface Inputs {
     login: string;
+    usersId: number[];
 }
 
 export default function ChatAddUserBtn() {
-    const { register, handleSubmit, watch } = useForm<Inputs>();
+    const chat = useAtomValue(chatAtom);
+
+    const { register, control, handleSubmit, watch } = useForm<Inputs>();
     const [open, setOpen] = useState(false);
     const { getChats } = useChats();
     const [users, setUsers] = useState([]);
 
     const onSubmit = async (data: Inputs) => {
         console.log(data);
-        const response = await fetchData(URLS.CHATS, {
-            method: FETCH_METHODS.POST,
-            body: JSON.stringify(data),
+        const response = await fetchData(URLS.ADD_CHATS_USERS, {
+            method: FETCH_METHODS.PUT,
+            body: JSON.stringify({
+                users: data.usersId,
+                chatId: chat!.id,
+            }),
         });
 
         if (response.reason) {
@@ -66,7 +74,7 @@ export default function ChatAddUserBtn() {
 
     return (
         <DialogRoot
-            // scrollBehavior="inside"
+            scrollBehavior="inside"
             open={open}
             onOpenChange={(e) => setOpen(e.open)}
         >
@@ -98,15 +106,36 @@ export default function ChatAddUserBtn() {
                     <DialogBody>
                         <Input {...register('login')} />
 
-                        <Box>
-                            <For each={users}>
-                                {(user: any) => (
-                                    <ChatAddedUserItem
-                                        key={user.id}
-                                        user={user}
-                                    />
+                        <Box
+                            h="300px"
+                            overflowY="auto"
+                        >
+                            <Controller
+                                name="usersId"
+                                control={control}
+                                render={({ field }) => (
+                                    <Box>
+                                        {users.map((user: any) => (
+                                            <ChatAddedUserItem
+                                                key={user.id}
+                                                user={user}
+                                                onClick={() => {
+                                                    const currentUsers = Array.isArray(field.value) ? field.value : [];
+
+                                                    if (currentUsers.includes(user.id)) {
+                                                        field.onChange(
+                                                            currentUsers.filter((id: number) => id !== user.id),
+                                                        );
+                                                    } else {
+                                                        field.onChange([...currentUsers, user.id]);
+                                                    }
+                                                }}
+                                                isSelected={Array.isArray(field.value) && field.value.includes(user.id)}
+                                            />
+                                        ))}
+                                    </Box>
                                 )}
-                            </For>
+                            />
                         </Box>
                     </DialogBody>
 

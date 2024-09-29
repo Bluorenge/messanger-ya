@@ -1,22 +1,21 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useBoolean } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 
 import { isElementPartiallyVisible } from '@/shared/lib';
 
 export default function useVisibleEl(btnBlock: any) {
-    const [isBlockVisible, setIsBlockVisible] = useBoolean(false);
+    const [isBlockVisible, setIsBlockVisible] = useState(false);
 
     useEffect(() => {
         const checkVisible = () => {
             if (isElementPartiallyVisible(btnBlock.current)) {
                 if (!isBlockVisible) {
-                    setIsBlockVisible.on();
+                    setIsBlockVisible(true);
                 }
                 return;
             }
-            setIsBlockVisible.off();
+            setIsBlockVisible(false);
         };
 
         if (btnBlock) {

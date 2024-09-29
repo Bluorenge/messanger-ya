@@ -8,6 +8,9 @@ export const URLS = {
 
     CHATS: '/chats',
     ADD_CHATS_USERS: '/chats/users',
+    getChatToken: (chatId: number) => `/chats/token/${chatId}`,
+    getChatSocket: (userId: number, chatId: number, token: number) =>
+        `wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`,
 
     USER_SEARCH: '/user/search',
 };

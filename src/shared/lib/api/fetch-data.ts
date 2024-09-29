@@ -15,7 +15,15 @@ const fetchData = async <T = any>(path: string, options?: TObj): Promise<T> => {
 
     const response = await fetch(`${URLS.API_BASE}${path}`, requestOptions);
 
-    const data: T = await response.json();
+    // Проверяем тип ответа
+    const contentType = response.headers.get('Content-Type');
+
+    let data;
+    if (contentType && contentType.includes('application/json')) {
+        data = await response.json();
+    } else {
+        data = await response.text();
+    }
 
     return data;
 };

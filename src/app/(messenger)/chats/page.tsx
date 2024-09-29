@@ -5,7 +5,7 @@ import { useAtomValue } from 'jotai';
 
 import { Chats } from '@/entities/messenger/chats';
 import { AvataredUserSettingsLink } from '@/entities/user/avatared-user-settings-link';
-import { chatAtom } from '@/features/messenger/chats/model/chat-store';
+import { chatAtom } from '@/features/messenger/chat/model/chat-store';
 import { Chat } from '@/entities/messenger/chat';
 
 export default function ChatsPage() {

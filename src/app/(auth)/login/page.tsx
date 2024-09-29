@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Input, Text, VStack } from '@chakra-ui/react';
+import { Input, Link, Text, VStack } from '@chakra-ui/react';
 
 import { Button } from '@/components/ui/button';
 import { Field } from '@/components/ui/field';
@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { fetchData, FETCH_METHODS } from '@/shared/lib';
 import { URLS } from '@/common/constants/global';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 enum InputNames {
     login = 'login',
@@ -18,7 +19,9 @@ interface Inputs {
     [InputNames.login]: string;
     [InputNames.password]: string;
 }
+
 export default function LoginPage() {
+    const router = useRouter();
     const [loginError, setLoginError] = useState<string>('');
     const {
         register,
@@ -34,6 +37,10 @@ export default function LoginPage() {
             body: JSON.stringify(data),
             credentials: 'include',
         });
+
+        if (response.id || response.reason === 'User already in system') {
+            router.push('/chats');
+        }
 
         if (response.reason) {
             setLoginError(response.reason);
@@ -64,7 +71,7 @@ export default function LoginPage() {
             <VStack>
                 <Button type="submit">Login</Button>
                 {loginError && <Text>{loginError}</Text>}
-                <Text>Register</Text>
+                <Link href="/register">Register</Link>
             </VStack>
         </VStack>
     );

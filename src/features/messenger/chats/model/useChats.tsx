@@ -6,11 +6,9 @@ import { URLS } from '@/common/constants/global';
 import { FETCH_METHODS, fetchData } from '@/shared/lib';
 import { useAtom } from 'jotai';
 import { chatsAtom } from './chats-store';
-import { chatAtom } from './chat-store';
 
 export default function useChats() {
     const [chats, setChats] = useAtom(chatsAtom);
-    const [chat, setChat] = useAtom(chatAtom);
 
     async function getChats() {
         const response = await fetchData(URLS.CHATS, {

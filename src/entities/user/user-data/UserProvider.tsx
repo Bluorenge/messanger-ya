@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 
 import { URLS } from '@/common/constants/global';
@@ -10,6 +10,7 @@ import { userAtom } from '@/entities/user/user-data';
 
 export default function UserProvider({ children }: { children: ReactNode }) {
     const router = useRouter();
+    const pathname = usePathname();
     const [userData, setUserData] = useAtom(userAtom);
 
     useEffect(() => {
@@ -22,8 +23,10 @@ export default function UserProvider({ children }: { children: ReactNode }) {
                 setUserData(user);
             }
 
-            if (user.id) {
+            if (user.id && pathname === '/') {
                 router.push('/chats');
+            } else if (!user.id && pathname !== '/login' && pathname !== '/register') {
+                router.push('/login');
             }
         }
         getUser();

@@ -4,7 +4,7 @@ import { useSetAtom } from 'jotai';
 import { Box, Flex, For } from '@chakra-ui/react';
 
 import { CreateChatBtn, useChats } from '@/features/messenger/chats';
-import { chatAtom } from '@/features/messenger/chats/model/chat-store';
+import { chatAtom } from '@/features/messenger/chat/model/chat-store';
 import ChatsItem from './ChatsItem';
 
 export default function Chats() {
